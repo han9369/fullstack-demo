@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var cors = require('cors');
+var bodyParser = require('body-parser')
 
 mongoose.connect('mongodb://localhost/webdxd');
 
@@ -31,6 +32,16 @@ app.get('/student/:id', function(req,res){
 		res.send(doc);
 	});
 });
+
+app.use(bodyParser.json());
+
+app.post('/new', function(req, res){
+	var newStudent = new Student(req.body);
+	newStudent.save(function(err, doc){
+		res.send(doc);
+	});
+});
+
 
 app.listen(3000);
 
